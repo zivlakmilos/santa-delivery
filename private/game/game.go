@@ -36,6 +36,7 @@ func NewGame() *Game {
 	}
 
 	g.states[GameStateMenu] = NewMenu()
+	g.states[GameStateGame] = NewGameplay()
 
 	return g
 }

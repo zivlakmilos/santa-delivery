@@ -40,9 +40,7 @@ func NewMenu() *Menu {
 }
 
 func (m *Menu) Update() (GameState, error) {
-	m.handleInput()
-
-	return GameStateMenu, nil
+	return m.handleInput(), nil
 }
 
 func (m *Menu) Draw(screen *ebiten.Image) {
@@ -53,8 +51,14 @@ func (m *Menu) Draw(screen *ebiten.Image) {
 	text.Draw(screen, "Pres ESC to Quit", m.font, screenWidth/2-100, screenHeight/2+225, color.White)
 }
 
-func (m *Menu) handleInput() {
+func (m *Menu) handleInput() GameState {
 	if ebiten.IsKeyPressed(ebiten.KeyQ) || ebiten.IsKeyPressed(ebiten.KeyEscape) {
 		os.Exit(0)
 	}
+
+	if ebiten.IsKeyPressed(ebiten.KeySpace) {
+		return GameStateGame
+	}
+
+	return GameStateMenu
 }
