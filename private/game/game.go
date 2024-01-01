@@ -1,11 +1,9 @@
 package game
 
 import (
-	"image/color"
 	"log"
 
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
 type GameState int
@@ -15,6 +13,11 @@ const (
 	GameStateGame
 	GameStateOver
 	GameStateCount
+)
+
+const (
+	screenWidth  = 720
+	screenHeight = 480
 )
 
 type Scene interface {
@@ -32,24 +35,35 @@ func NewGame() *Game {
 		state: GameStateMenu,
 	}
 
+	g.states[GameStateMenu] = NewMenu()
+
 	return g
 }
 
 func (g *Game) Update() error {
+	state := g.states[g.state]
+	nextState, err := state.Update()
+	if err != nil {
+		return err
+	}
+
+	g.state = nextState
 	return nil
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
-	screen.Fill(color.RGBA{0x00, 0x00, 0x00, 0xFF})
-	ebitenutil.DebugPrint(screen, "Hello World")
+	state := g.states[g.state]
+
+	screen.Clear()
+	state.Draw(screen)
 }
 
-func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
-	return 320, 240
+func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
+	return screenWidth, screenHeight
 }
 
 func StartGame() {
-	ebiten.SetWindowSize(640, 480)
+	ebiten.SetWindowSize(screenWidth, screenHeight)
 	ebiten.SetWindowTitle("Santa's Delivery")
 	game := NewGame()
 	if err := ebiten.RunGame(game); err != nil {
