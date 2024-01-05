@@ -11,7 +11,7 @@ const (
 )
 
 type Level struct {
-	Tiles [][]Tile
+	Tiles [][]*Tile
 
 	Width  int
 	Height int
@@ -27,11 +27,21 @@ func (l *Level) Load(reader io.Reader) error {
 		return err
 	}
 
+	err = l.loadTiles(reader)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
 func (l *Level) Save(writer io.Writer) error {
 	err := l.saveHeader(writer)
+	if err != nil {
+		return err
+	}
+
+	err = l.saveTiles(writer)
 	if err != nil {
 		return err
 	}
@@ -63,6 +73,31 @@ func (l *Level) loadHeader(reader io.Reader) error {
 	return nil
 }
 
+func (l *Level) loadTiles(reader io.Reader) error {
+	bufLen := l.Width * l.Height
+	buf := make([]byte, bufLen)
+
+	n, err := reader.Read(buf)
+	if err != nil {
+		return err
+	}
+
+	if n != bufLen {
+		return fmt.Errorf("error while loading tiles")
+	}
+
+	l.Tiles = make([][]*Tile, l.Height)
+	for r := 0; r < l.Height; r++ {
+		l.Tiles[r] = make([]*Tile, l.Width)
+		for c := 0; c < l.Width; c++ {
+			tile := NewTile(TileType(buf[r*l.Width+c]))
+			l.Tiles[r][c] = tile
+		}
+	}
+
+	return nil
+}
+
 func (l *Level) saveHeader(writer io.Writer) error {
 	buf := []byte{0x20, 0x24, byte(l.Width), byte(l.Height)}
 	n, err := writer.Write(buf)
@@ -72,6 +107,22 @@ func (l *Level) saveHeader(writer io.Writer) error {
 
 	if n != 4 {
 		return fmt.Errorf("error while saving header")
+	}
+
+	return nil
+}
+
+func (l *Level) saveTiles(writer io.Writer) error {
+	for r := 0; r < l.Height; r++ {
+		row := make([]byte, l.Width)
+		for c := 0; c < l.Width; c++ {
+			tile := l.Tiles[r][c]
+			row[c] = byte(tile.TileType)
+		}
+		_, err := writer.Write(row)
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil
