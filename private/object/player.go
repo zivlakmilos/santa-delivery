@@ -14,14 +14,14 @@ type PlayerState int
 
 const (
 	PlayerStateIdle PlayerState = iota
-	PlayerStateWalkRight
-	PlayerStateWalkLeft
+	PlayerStateWalk
 	PlayerStateCount // NOTE: Must be last
 )
 
 type Player struct {
 	pos   Vector
 	vel   Vector
+	face  Vector
 	state PlayerState
 
 	sprites         [PlayerStateCount][]*ebiten.Image
@@ -59,10 +59,9 @@ func (p *Player) Update() error {
 	}
 	p.pos.Add(p.vel)
 
-	if p.vel.X > 0 {
-		p.setState(PlayerStateWalkRight)
-	} else if p.vel.X < 0 {
-		p.setState(PlayerStateWalkLeft)
+	if p.vel.X != 0 {
+		p.face.X = p.vel.X
+		p.setState(PlayerStateWalk)
 	} else {
 		p.setState(PlayerStateIdle)
 	}
@@ -74,6 +73,9 @@ func (p *Player) Update() error {
 
 func (p *Player) Draw(screen *ebiten.Image, camera *Camera) {
 	img := p.sprites[p.state][p.animationIdx]
+	if p.face.X < 0 {
+		img = utils.FlipImageHorizontal(img)
+	}
 
 	opt := &ebiten.DrawImageOptions{}
 	opt.GeoM.Scale(0.15, 0.15)
@@ -129,7 +131,7 @@ func (p *Player) loadSprites() {
 		p.loadImage(images.SantaIdle16),
 	}
 
-	p.sprites[PlayerStateWalkRight] = []*ebiten.Image{
+	p.sprites[PlayerStateWalk] = []*ebiten.Image{
 		p.loadImage(images.SantaWalk1),
 		p.loadImage(images.SantaWalk2),
 		p.loadImage(images.SantaWalk3),
@@ -143,22 +145,6 @@ func (p *Player) loadSprites() {
 		p.loadImage(images.SantaWalk11),
 		p.loadImage(images.SantaWalk12),
 		p.loadImage(images.SantaWalk13),
-	}
-
-	p.sprites[PlayerStateWalkLeft] = []*ebiten.Image{
-		utils.FlipImageHorizontal(p.loadImage(images.SantaWalk1)),
-		utils.FlipImageHorizontal(p.loadImage(images.SantaWalk2)),
-		utils.FlipImageHorizontal(p.loadImage(images.SantaWalk3)),
-		utils.FlipImageHorizontal(p.loadImage(images.SantaWalk4)),
-		utils.FlipImageHorizontal(p.loadImage(images.SantaWalk5)),
-		utils.FlipImageHorizontal(p.loadImage(images.SantaWalk6)),
-		utils.FlipImageHorizontal(p.loadImage(images.SantaWalk7)),
-		utils.FlipImageHorizontal(p.loadImage(images.SantaWalk8)),
-		utils.FlipImageHorizontal(p.loadImage(images.SantaWalk9)),
-		utils.FlipImageHorizontal(p.loadImage(images.SantaWalk10)),
-		utils.FlipImageHorizontal(p.loadImage(images.SantaWalk11)),
-		utils.FlipImageHorizontal(p.loadImage(images.SantaWalk12)),
-		utils.FlipImageHorizontal(p.loadImage(images.SantaWalk13)),
 	}
 }
 
