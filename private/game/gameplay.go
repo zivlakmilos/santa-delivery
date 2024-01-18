@@ -6,6 +6,7 @@ import (
 	"log"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/zivlakmilos/santa-delivery/private/constant"
 	"github.com/zivlakmilos/santa-delivery/private/object"
 	"github.com/zivlakmilos/santa-delivery/resources/images"
 
@@ -26,7 +27,7 @@ func NewGameplay() *Gameplay {
 
 	return &Gameplay{
 		background: ebiten.NewImageFromImage(bg),
-		camera:     object.NewCamera(0, 0, screenWidth, screenHeight),
+		camera:     object.NewCamera(0, 0, constant.ScreenWidth, constant.ScreenHeight),
 		player:     object.NewPlayer(100, 100),
 	}
 }

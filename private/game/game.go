@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/zivlakmilos/santa-delivery/private/constant"
 )
 
 type GameState int
@@ -13,11 +14,6 @@ const (
 	GameStateGame
 	GameStateOver
 	GameStateCount
-)
-
-const (
-	screenWidth  = 720
-	screenHeight = 480
 )
 
 type Scene interface {
@@ -60,11 +56,11 @@ func (g *Game) Draw(screen *ebiten.Image) {
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
-	return screenWidth, screenHeight
+	return constant.ScreenWidth, constant.ScreenHeight
 }
 
 func StartGame() {
-	ebiten.SetWindowSize(screenWidth, screenHeight)
+	ebiten.SetWindowSize(constant.ScreenWidth, constant.ScreenHeight)
 	ebiten.SetWindowTitle("Santa's Delivery")
 	game := NewGame()
 	if err := ebiten.RunGame(game); err != nil {

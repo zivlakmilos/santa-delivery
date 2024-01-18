@@ -10,6 +10,7 @@ import (
 	"github.com/golang/freetype/truetype"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text"
+	"github.com/zivlakmilos/santa-delivery/private/constant"
 	"github.com/zivlakmilos/santa-delivery/resources/images"
 	"golang.org/x/image/font"
 	"golang.org/x/image/font/gofont/goregular"
@@ -47,8 +48,8 @@ func (m *Menu) Draw(screen *ebiten.Image) {
 	opt := &ebiten.DrawImageOptions{}
 	screen.DrawImage(m.background, opt)
 
-	text.Draw(screen, "Press SPACE to Start", m.font, screenWidth/2-125, screenHeight/2+175, color.White)
-	text.Draw(screen, "Pres ESC to Quit", m.font, screenWidth/2-100, screenHeight/2+225, color.White)
+	text.Draw(screen, "Press SPACE to Start", m.font, constant.ScreenWidth/2-125, constant.ScreenHeight/2+175, color.White)
+	text.Draw(screen, "Pres ESC to Quit", m.font, constant.ScreenWidth/2-100, constant.ScreenHeight/2+225, color.White)
 }
 
 func (m *Menu) handleInput() GameState {
