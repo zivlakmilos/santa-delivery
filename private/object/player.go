@@ -78,7 +78,7 @@ func (p *Player) Draw(screen *ebiten.Image, camera *Camera) {
 	}
 
 	opt := &ebiten.DrawImageOptions{}
-	opt.GeoM.Translate(p.pos.X-camera.pos.X+camera.width/2, p.pos.Y-camera.pos.Y+camera.height/2)
+	opt.GeoM.Translate(p.pos.X-float64(img.Bounds().Dx())/2-camera.pos.X+camera.width/2, p.pos.Y-camera.pos.Y+camera.height/2)
 
 	screen.DrawImage(img, opt)
 }
