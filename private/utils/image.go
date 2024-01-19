@@ -19,3 +19,11 @@ func FlipImageVertical(source *ebiten.Image) *ebiten.Image {
 	result.DrawImage(source, op)
 	return result
 }
+
+func ScaleImage(source *ebiten.Image, x, y float64) *ebiten.Image {
+	result := ebiten.NewImage(int(float64(source.Bounds().Dx())*x), int(float64(source.Bounds().Dy())*y))
+	op := &ebiten.DrawImageOptions{}
+	op.GeoM.Scale(x, y)
+	result.DrawImage(source, op)
+	return result
+}

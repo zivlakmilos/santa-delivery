@@ -5,4 +5,6 @@ const (
 	ScreenHeight = 480
 
 	FPS = 60
+
+	Debug = true
 )

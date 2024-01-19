@@ -78,7 +78,6 @@ func (p *Player) Draw(screen *ebiten.Image, camera *Camera) {
 	}
 
 	opt := &ebiten.DrawImageOptions{}
-	opt.GeoM.Scale(0.15, 0.15)
 	opt.GeoM.Translate(p.pos.X-camera.pos.X+camera.width/2, p.pos.Y-camera.pos.Y+camera.height/2)
 
 	screen.DrawImage(img, opt)
@@ -113,38 +112,38 @@ func (p *Player) setState(state PlayerState) {
 
 func (p *Player) loadSprites() {
 	p.sprites[PlayerStateIdle] = []*ebiten.Image{
-		p.loadImage(images.SantaIdle1),
-		p.loadImage(images.SantaIdle2),
-		p.loadImage(images.SantaIdle3),
-		p.loadImage(images.SantaIdle4),
-		p.loadImage(images.SantaIdle5),
-		p.loadImage(images.SantaIdle6),
-		p.loadImage(images.SantaIdle7),
-		p.loadImage(images.SantaIdle8),
-		p.loadImage(images.SantaIdle9),
-		p.loadImage(images.SantaIdle10),
-		p.loadImage(images.SantaIdle11),
-		p.loadImage(images.SantaIdle12),
-		p.loadImage(images.SantaIdle13),
-		p.loadImage(images.SantaIdle14),
-		p.loadImage(images.SantaIdle15),
-		p.loadImage(images.SantaIdle16),
+		utils.ScaleImage(p.loadImage(images.SantaIdle1), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaIdle2), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaIdle3), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaIdle4), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaIdle5), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaIdle6), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaIdle7), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaIdle8), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaIdle9), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaIdle10), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaIdle11), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaIdle12), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaIdle13), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaIdle14), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaIdle15), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaIdle16), 0.15, 0.15),
 	}
 
 	p.sprites[PlayerStateWalk] = []*ebiten.Image{
-		p.loadImage(images.SantaWalk1),
-		p.loadImage(images.SantaWalk2),
-		p.loadImage(images.SantaWalk3),
-		p.loadImage(images.SantaWalk4),
-		p.loadImage(images.SantaWalk5),
-		p.loadImage(images.SantaWalk6),
-		p.loadImage(images.SantaWalk7),
-		p.loadImage(images.SantaWalk8),
-		p.loadImage(images.SantaWalk9),
-		p.loadImage(images.SantaWalk10),
-		p.loadImage(images.SantaWalk11),
-		p.loadImage(images.SantaWalk12),
-		p.loadImage(images.SantaWalk13),
+		utils.ScaleImage(p.loadImage(images.SantaWalk1), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaWalk2), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaWalk3), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaWalk4), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaWalk5), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaWalk6), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaWalk7), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaWalk8), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaWalk9), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaWalk10), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaWalk11), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaWalk12), 0.15, 0.15),
+		utils.ScaleImage(p.loadImage(images.SantaWalk13), 0.15, 0.15),
 	}
 }
 
