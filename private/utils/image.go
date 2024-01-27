@@ -1,6 +1,37 @@
 package utils
 
-import "github.com/hajimehoshi/ebiten/v2"
+import (
+	"bytes"
+	"image"
+	"image/color"
+	"log"
+
+	_ "image/png"
+
+	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/vector"
+)
+
+func LoadImage(file []byte) *ebiten.Image {
+	img, _, err := image.Decode(bytes.NewReader(file))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return ebiten.NewImageFromImage(img)
+}
+
+func CreateFillImage(width, height int, color color.Color) *ebiten.Image {
+	result := ebiten.NewImage(width, height)
+	vector.DrawFilledRect(result, 0, 0, float32(result.Bounds().Dx()), float32(result.Bounds().Dy()), color, false)
+	return result
+}
+
+func CreateBorderImage(width, height int, w float32, color color.Color) *ebiten.Image {
+	result := ebiten.NewImage(width, height)
+	vector.StrokeRect(result, 0, 0, float32(result.Bounds().Dx()), float32(result.Bounds().Dy()), w, color, false)
+	return result
+}
 
 func FlipImageHorizontal(source *ebiten.Image) *ebiten.Image {
 	result := ebiten.NewImage(source.Bounds().Dx(), source.Bounds().Dy())
