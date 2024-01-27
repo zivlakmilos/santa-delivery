@@ -73,7 +73,6 @@ func (t *Text) Update() error {
 				continue
 			}
 			keyCode := strKey[0]
-			fmt.Printf("%v\n", keyCode)
 			if (keyCode >= 'A' && keyCode <= 'Z') || (keyCode >= 'a' && keyCode <= 'z') || (keyCode >= '0' && keyCode <= '9') {
 				t.value += strKey
 			}
